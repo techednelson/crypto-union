@@ -1,14 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
+import { Footer, Navbar, Services, Transactions, Hero } from './components';
+import React from 'react';
 
-export function App() {
-  return (
-    <>
-      <NxWelcome title="client" />
-      <div />
-    </>
-  );
-}
+const App = () => (
+  <main className="min-h-screen">
+    <Navbar />
+    <Hero />
+    <Services />
+    <Transactions />
+    <Footer />
+  </main>
+);
 
 export default App;
