@@ -8,8 +8,8 @@ The main purpose is to transfer Ethers from you Metamask Ethereum Wallet to anot
 
 ![](apps/client/src/assets/images/landing_page.png)
 
-App is deploy and ready to be used on the link:
-https://62e197378f0fc121a7fbe543--capable-griffin-99d31d.netlify.app/
+App is deployed and ready to be used on link:
+https://crypto-union.netlify.app/
 
 
 ## Pre-requirements to run on localhost the app
