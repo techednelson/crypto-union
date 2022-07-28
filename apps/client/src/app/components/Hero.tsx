@@ -13,8 +13,13 @@ const InputStyles =
   'my-2 w-full p-2 outline-none bg-transparent border-slate-400 border-2 rounded text-white text-sm';
 
 const Hero = () => {
-  const { currentAccount, connectWallet, sendTransaction, isLoading } =
-    useTransactionsContext() as ITransactionContext;
+  const {
+    currentAccount,
+    setCurrentAccount,
+    connectWallet,
+    sendTransaction,
+    isLoading,
+  } = useTransactionsContext() as ITransactionContext;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -102,6 +107,15 @@ const Hero = () => {
             <input
               placeholder="Address To"
               type="text"
+              name="addressFrom"
+              value={currentAccount}
+              onChange={(e) => setCurrentAccount(e.target.value)}
+              required
+              className={InputStyles}
+            />
+            <input
+              placeholder="Address To"
+              type="text"
               name="addressTo"
               required
               className={InputStyles}
@@ -126,8 +140,13 @@ const Hero = () => {
               <Loader />
             ) : (
               <button
+                disabled={!currentAccount}
                 type="submit"
-                className="text-white w-full mt-2 p-2 bg-black text-primary-yellow border-primary-yellow border-2 rounded-full cursor-pointer hover:bg-gray-500"
+                className={`text-white w-full mt-2 p-2 bg-black ${
+                  currentAccount
+                    ? 'text-primary-yellow border-primary-yellow border-2 hover:bg-gray-500 cursor-pointer'
+                    : 'text-gray-500 border-gray-500 border-2 cursor-not-allowed'
+                } rounded-full`}
               >
                 Send now
               </button>

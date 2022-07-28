@@ -1,6 +1,8 @@
 import React, {
   createContext,
+  Dispatch,
   ReactNode,
+  SetStateAction,
   useCallback,
   useEffect,
   useState,
@@ -20,10 +22,11 @@ export interface IFormData {
 }
 
 export interface ITransactionContext {
-  transactionCount: string | null;
+  transactionCount: number;
   connectWallet: () => void;
   transactions: IStructuredTransaction[];
   currentAccount: string;
+  setCurrentAccount: Dispatch<SetStateAction<string>>;
   isLoading: boolean;
   sendTransaction: (formData: IFormData) => void;
 }
@@ -53,11 +56,13 @@ export const TransactionsContextProvider = ({
 }: ITransactionsContextProviderProps) => {
   const [currentAccount, setCurrentAccount] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [transactionCount, setTransactionCount] = useState<string | null>(
-    localStorage.getItem('transactionCount')
-  );
+  const [transactionCount, setTransactionCount] = useState<number>(0);
   const [transactions, setTransactions] = useState<IStructuredTransaction[]>(
     []
+  );
+
+  ethereum?.on('accountsChanged', (accounts: string[]) =>
+    setCurrentAccount(accounts[0])
   );
 
   const getAllTransactions = useCallback(async () => {
@@ -77,8 +82,8 @@ export const TransactionsContextProvider = ({
           amount: Number((transaction.amount as any)._hex) / 10 ** 18,
         })
       );
-
       setTransactions(structuredTransactions);
+      setTransactionCount(structuredTransactions.length);
     } catch (error) {
       console.error(error);
     }
@@ -89,11 +94,7 @@ export const TransactionsContextProvider = ({
       const ethereumContract = createEthereumContract();
       const currentTransactionsCount =
         await ethereumContract.getTransactionsCount();
-
-      window.localStorage.setItem(
-        'transactionsCount',
-        currentTransactionsCount
-      );
+      localStorage.setItem('transactionsCount', currentTransactionsCount);
     } catch (error) {
       console.error(error);
     }
@@ -115,23 +116,24 @@ export const TransactionsContextProvider = ({
 
   const connectWallet = async () => {
     try {
-      if (!ethereum) {
+      if (!ethereum.isMetaMask) {
         return alert('Please install MetaMask.');
       }
       const accounts = await ethereum.request({
         method: 'eth_requestAccounts',
       });
       setCurrentAccount(accounts[0]);
-      window.location.reload();
+      await getAllTransactions();
     } catch (error) {
       console.error(error);
+      alert('Something went wrong!.');
     }
   };
 
   const sendTransaction = async (formData: IFormData) => {
     try {
       if (!ethereum) {
-        return console.log('No ethereum object');
+        return console.error('No ethereum object');
       }
       const { addressTo, amount, message } = formData;
       const parsedAmount = ethers.utils.parseEther(amount);
@@ -156,8 +158,8 @@ export const TransactionsContextProvider = ({
       await transactionHash.wait();
       setIsLoading(false);
       const transactionsCount = await ethereumContract.getTransactionsCount();
-      setTransactionCount(transactionsCount);
-      window.location.reload();
+      setTransactionCount(Number(transactionsCount));
+      await getAllTransactions();
       alert('Transaction successful!.');
     } catch (error) {
       console.error(error);
@@ -181,6 +183,7 @@ export const TransactionsContextProvider = ({
         connectWallet,
         transactions,
         currentAccount,
+        setCurrentAccount,
         isLoading,
         sendTransaction,
       }}
