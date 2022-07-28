@@ -116,7 +116,7 @@ export const TransactionsContextProvider = ({
 
   const connectWallet = async () => {
     try {
-      if (!ethereum.isMetaMask) {
+      if (!ethereum) {
         return alert('Please install MetaMask.');
       }
       const accounts = await ethereum.request({

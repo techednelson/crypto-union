@@ -78,7 +78,7 @@ const Hero = () => {
               />
             )}
           </div>
-          <YoutubeEmbed embedId="LhK2ZSWzMpk" />
+          <YoutubeEmbed embedId="PSU2r6FkEDg" />
         </div>
 
         <div className="flex flex-col flex-1 items-center justify-start w-full mt-10">
