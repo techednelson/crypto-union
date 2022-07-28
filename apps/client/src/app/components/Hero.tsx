@@ -105,7 +105,7 @@ const Hero = () => {
             className="p-5 sm:w-96 w-full flex flex-col justify-start items-center bg-black rounded-xl"
           >
             <input
-              placeholder="Address To"
+              placeholder="Address From"
               type="text"
               name="addressFrom"
               value={currentAccount}

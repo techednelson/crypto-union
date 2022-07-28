@@ -15,7 +15,9 @@ const Transactions = () => {
               : 'There is no transactions yet'
             : 'Connect your account to see the latest transactions'}
         </h1>
-        <h3 className="text-xl text-center">Total: {transactionCount}</h3>
+        {currentAccount && transactions.length > 0 && (
+          <h3 className="text-xl text-center">Total: {transactionCount}</h3>
+        )}
         <div className="flex flex-wrap justify-center items-center mt-10">
           {transactions?.reverse().map((transaction, index) => (
             <TransactionsCard key={index} {...transaction} />
