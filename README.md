@@ -13,21 +13,26 @@ https://crypto-union.netlify.app/
 
 
 ## Pre-requirements to run on localhost the app
-Goerli APP API_KEY from https://dashboard.alchemyapi.io/
 
-Metamask Wallet Private Keys. You can download the wallet from here https://metamask.io/download/
+1. Run `yarn install` from `root` folder and `yarn install` from `smart-contract` folder
 
-Free Ethers for testing. You can get them from here https://goerlifaucet.com/
+2. Get a Goerli APP API_KEY from https://dashboard.alchemyapi.io/
 
-Once you have the Goerli APP API_KEY and MetaMask installed, you need to fill the missing data in ./smart-contract/hardhat.config.ts
+3. Get MetaMask Wallet Private Keys. You can download the wallet from here https://metamask.io/download/
+
+4. Get free Ethers for testing. You can get them from here https://goerlifaucet.com/
+
+5. Once you have the Goerli APP API_KEY and MetaMask installed, you need to fill the missing data in `./smart-contract/hardhat.config.ts`
 
 ![](apps/client/src/assets/images/hardhat.png)
 
-Deploy the smart contract from smart-contract/contracts/Transactions.sol running from root the command yarn --cwd smart-contract deploy
+6. Deploy the smart contract from `smart-contract/contracts/Transactions.sol` running from `root` the command `yarn --cwd smart-contract deploy`
 
 if everything is successful in the command line you will see a deployment number, this is the contract address where de 
-contract was deployed inside the Ethereum Blockchain. You need to take this value and replace the variable 
-process.env['NX_CONTRACT_ADDRESS'] in apps/client/src/app/context/TransactionsContextProvider for the deployed contract address
+contract was deployed inside the Ethereum Blockchain.
+
+7. You need to take this value and replace the variable
+`process.env['NX_CONTRACT_ADDRESS']` in `apps/client/src/app/context/TransactionsContextProvider.tsx` for the deployed contract address
 
 ![](apps/client/src/assets/images/contract_address.png)
 
