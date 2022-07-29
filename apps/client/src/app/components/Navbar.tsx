@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { HiMenuAlt4 } from 'react-icons/hi';
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiFillGithub, AiOutlineClose } from 'react-icons/ai';
 import { Logo } from './index';
 
 const Navbar = () => {
@@ -23,6 +23,15 @@ const Navbar = () => {
       </li>
       <li className="bg-black text-primary-yellow border-primary-yellow border-2 py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-gray-500">
         Login
+      </li>
+      <li className="text-primary-yellow mx-4 cursor-pointer hover:text-gray-500">
+        <a
+          target="_blank"
+          href="https://github.com/techednelson/crypto-union"
+          rel="noreferrer"
+        >
+          <AiFillGithub size="2rem" />
+        </a>
       </li>
     </>
   );

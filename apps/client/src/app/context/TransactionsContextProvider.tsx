@@ -170,7 +170,7 @@ export const TransactionsContextProvider = ({
   useEffect(() => {
     (async () => {
       if (!ethereum) {
-        return alert('Please install MetaMask.');
+        return;
       }
       await checkIfWalletIsConnect();
     })();
